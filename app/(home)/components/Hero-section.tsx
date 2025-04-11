@@ -5,7 +5,7 @@ import learn from '@/public/learn.png'
 export default function HeroSection() {
   return (
     <section className="py-20 relative overflow-hidden bg-gradient-to-b from-blue-50 to-white">
-      <div className="container mx-auto px-4 flex justify-between items-center">
+      <div className="container mx-auto px-4 flex justify-between items-center flex-wrap">
         <div className="max-w-3xl mx-auto mb-12">
           <div className="inline-block px-3 py-1 rounded-full bg-blue-100 border border-blue-200 text-blue-600 text-sm font-medium mb-6">
             Built on Hathor Network
