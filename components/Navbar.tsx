@@ -28,10 +28,11 @@ export default function Header() {
             variant="outline"
             className="hidden sm:flex border-blue-600 text-blue-600 hover:bg-blue-50"
           >
-            Log In
+            Join as a teacher
           </Button>
           <Button className="bg-blue-600 hover:bg-blue-700 text-white">
-            Sign Up
+            Join as a student
+
           </Button>
         </div>
       </div>
