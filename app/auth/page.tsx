@@ -13,6 +13,10 @@ import { useForm } from "react-hook-form"
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form"
 import Header from "@/components/Navbar"
 import Footer from "@/components/Footer"
+import { cn } from "@/lib/utils"
+import { Wallet } from "lucide-react"
+import { useConnectModal } from "@rainbow-me/rainbowkit"
+import { useAccount } from "wagmi"
 
 const formSchema = z.object({
     email: z.string().email({ message: "Please enter a valid email address" }),
@@ -21,10 +25,13 @@ const formSchema = z.object({
         required_error: "Please select a user type",
     }),
 })
-
 export default function AuthPage() {
     const [activeTab, setActiveTab] = useState("signup")
-
+    const [isConnecting, setIsConnecting] = useState(false)
+    const [isWalletConnected, setIsWalletConnected] = useState(false)
+    const [walletAddress, setWalletAddress] = useState("")
+    const { openConnectModal } = useConnectModal();
+    const { isConnected, address } = useAccount();
     const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema),
         defaultValues: {
@@ -116,23 +123,23 @@ export default function AuthPage() {
                                             )}
                                         />
 
-                                        <FormField
-                                            control={form.control}
-                                            name="walletAddress"
-                                            render={({ field }) => (
-                                                <FormItem>
-                                                    <FormLabel className="text-blue-700">Wallet Address</FormLabel>
-                                                    <FormControl>
-                                                        <Input
-                                                            placeholder="0x..."
-                                                            {...field}
-                                                            className="border-blue-200 focus-visible:ring-blue-500"
-                                                        />
-                                                    </FormControl>
-                                                    <FormMessage />
-                                                </FormItem>
-                                            )}
-                                        />
+                                        <div className="space-y-2">
+                                            <label className="text-sm text-zinc-400 font-medium pb-3">Wallet</label>
+                                            <Button
+                                                type="button"
+                                                onClick={() => openConnectModal?.()}
+                                                disabled={isConnecting || isWalletConnected}
+                                                variant="outline"
+                                                className={cn(
+                                                    "w-full cursor-pointer justify-start h-10 bg-zinc-800 border-zinc-700 hover:bg-zinc-700 hover:text-white text-left font-normal text-white",
+                                                    isWalletConnected && "border-orange-500/50 text-orange-500 cursor-pointer",
+                                                )}
+                                            >
+                                                <Wallet className="mr-2 h-4 w-4" />
+                                                {isConnected ? `${address?.slice(0, 6)}...${address?.slice(-4)}` : 'Connect Wallet'}
+                                            </Button>
+                                            {isWalletConnected && <p className="text-xs text-zinc-500 truncate mt-1">{walletAddress}</p>}
+                                        </div>
 
                                         <Button type="submit" className="w-full bg-blue-600 hover:bg-blue-700">
                                             Create Account
@@ -193,23 +200,23 @@ export default function AuthPage() {
                                             )}
                                         />
 
-                                        <FormField
-                                            control={form.control}
-                                            name="walletAddress"
-                                            render={({ field }) => (
-                                                <FormItem>
-                                                    <FormLabel className="text-blue-700">Wallet Address</FormLabel>
-                                                    <FormControl>
-                                                        <Input
-                                                            placeholder="0x..."
-                                                            {...field}
-                                                            className="border-blue-200 focus-visible:ring-blue-500"
-                                                        />
-                                                    </FormControl>
-                                                    <FormMessage />
-                                                </FormItem>
-                                            )}
-                                        />
+                                        <div className="space-y-2">
+                                            <label className="text-sm text-zinc-400 font-medium pb-3">Wallet</label>
+                                            <Button
+                                                type="button"
+                                                onClick={() => openConnectModal?.()}
+                                                disabled={isConnecting || isWalletConnected}
+                                                variant="outline"
+                                                className={cn(
+                                                    "w-full cursor-pointer justify-start h-10 bg-zinc-800 border-zinc-700 hover:bg-zinc-700 hover:text-white text-left font-normal text-white",
+                                                    isWalletConnected && "border-orange-500/50 text-orange-500 cursor-pointer",
+                                                )}
+                                            >
+                                                <Wallet className="mr-2 h-4 w-4" />
+                                                {isConnected ? `${address?.slice(0, 6)}...${address?.slice(-4)}` : 'Connect Wallet'}
+                                            </Button>
+                                            {isWalletConnected && <p className="text-xs text-zinc-500 truncate mt-1">{walletAddress}</p>}
+                                        </div>
 
                                         <Button type="submit" className="w-full bg-blue-600 hover:bg-blue-700">
                                             Sign In

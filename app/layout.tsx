@@ -1,10 +1,12 @@
 import type { Metadata } from "next";
-import {  Poppins } from "next/font/google";
+import { Poppins } from "next/font/google";
 import "./globals.css";
+import { QueryProviders } from "@/components/providers/QueryProvider";
+import { Providers } from "@/components/providers/Rainbow-Provider";
 
 const geistSans = Poppins({
- subsets:["latin"],
- weight:["400","500","600"]
+  subsets: ["latin"],
+  weight: ["400", "500", "600"]
 });
 
 
@@ -23,7 +25,11 @@ export default function RootLayout({
       <body
         className={`${geistSans.className} antialiased`}
       >
-        {children}
+        <QueryProviders>
+          <Providers>
+            {children}
+          </Providers>
+        </QueryProviders>
       </body>
     </html>
   );

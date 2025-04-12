@@ -24,16 +24,19 @@ export default function Header() {
           </Link>
         </nav>
         <div className="flex items-center gap-4">
+          <Link href={"/auth"}>
           <Button
             variant="outline"
             className="hidden sm:flex border-blue-600 text-blue-600 hover:bg-blue-50"
           >
-            Join as a teacher
+            Sign In
           </Button>
+          </Link>
+          <Link href={"/auth"}>
           <Button className="bg-blue-600 hover:bg-blue-700 text-white">
-            Join as a student
-
+            Sign Up
           </Button>
+          </Link>
         </div>
       </div>
     </header>
